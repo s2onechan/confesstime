@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Confession Time ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTU5Nmd6Z2UxenlxNXlmMXhhNGw1ejJldDQ2aDZneHE0MHNwaWJoeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KjvlWLTmKqAww/giphy.gif') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            width: 95%;
+            max-width: 450px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 4px 4px 8px pink;
+            font-family: 'Pacifico', cursive;
+            line-height: 1.4;
+        }
+        .btn {
+            padding: 14px 28px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            margin: 12px;
+            font-family: 'Pacifico', cursive;
+            transition: transform 0.2s ease;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .yes {
+            background-color: #ff66b2;
+            color: white;
+        }
+        .no {
+            background-color: #cccccc;
+            color: black;
+        }
+        #message {
+            font-size: 20px;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>I've been thinking about this for a while... Will you make my heart the happiest by saying yes? 💕</h1>
+        <button class="btn yes" onclick="showLove()">Yes ❤️</button>
+        <button class="btn no" onclick="showNo()">No 😢</button>
+        <h2 id="message"></h2>
+    </div>
+
+    <script>
+        function showLove() {
+            document.getElementById('message').innerHTML = "Yay! I like you too! 😘💕<br><button class='btn' onclick=\"sendSMS('Love u <3')\">Send SMS 💌</button>";
+        }
+
+        function showNo() {
+            document.getElementById('message').innerHTML = "The girl says no as yes hihi 💕<br><button class='btn' onclick=\"sendSMS('The girl says no as yes hihi')\">Send SMS 💌</button>";
+        }
+
+        function sendSMS(text) {
+            window.location.href = `sms:+84377790889?body=${encodeURIComponent(text)}`;
+        }
+    </script>
+</body>
+</html>
