@@ -2,89 +2,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Confession Time ❤️</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confession</title>
     <style>
         body {
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTU5Nmd6Z2UxenlxNXlmMXhhNGw1ejJldDQ2aDZneHE0MHNwaWJoeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KjvlWLTmKqAww/giphy.gif') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-        }
-        .container {
-            width: 95%;
-            max-width: 450px;
+            background-color: #ffebee;
+            font-family: Arial, sans-serif;
             text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
         }
-        h1 {
-            font-size: 32px;
-            font-weight: bold;
-            text-shadow: 4px 4px 8px pink;
-            font-family: 'Pacifico', cursive;
-            line-height: 1.4;
+        .message {
+            font-size: 24px;
+            color: #d32f2f;
+            margin-bottom: 20px;
         }
-        .btn {
-            padding: 14px 28px;
-            font-size: 20px;
-            cursor: pointer;
+        .buttons {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
             border: none;
-            border-radius: 15px;
-            margin: 12px;
-            font-family: 'Pacifico', cursive;
-            transition: transform 0.2s ease;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        .btn:hover {
-            transform: scale(1.1);
-        }
-        .yes {
-            background-color: #ff66b2;
-            color: white;
-        }
-        .no {
-            background-color: #cccccc;
-            color: black;
-        }
-        #message {
-            font-size: 20px;
-            margin-top: 25px;
+        .yes { background-color: #4CAF50; color: white; }
+        .no { background-color: #f44336; color: white; }
+        
+        @media (max-width: 430px) {
+            body {
+                height: 100vh;
+                justify-content: flex-start;
+                padding-top: 20vh;
+            }
+            .message {
+                font-size: 20px;
+            }
+            button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>I've been thinking about this for a while... Will you make my heart the happiest by saying yes? 💕</h1>
-        <button class="btn yes" onclick="showLove()">Yes ❤️</button>
-        <button class="btn no" onclick="showNo()">No 😢</button>
-        <h2 id="message"></h2>
+    <div class="message" id="confession"></div>
+    <div class="buttons" id="buttons">
+        <button class="yes" onclick="acceptConfession()">Yes</button>
+        <button class="no" onclick="rejectConfession()">No</button>
     </div>
-
+    <div id="smsMessage"></div>
+    <audio id="loveSound" src="love.mp3"></audio>
+    
     <script>
-        function showLove() {
-            document.getElementById('message').innerHTML = "Yay! I like you too! 😘💕<br><button class='btn' onclick=\"sendSMS('Love u <3')\">Send SMS 💌</button>";
+        const message = "I have something important to say...";
+        const confession = [
+            "From the moment I met you, my heart knew...",
+            "You're the one who makes my world brighter.",
+            "I can't hold it in anymore...",
+            "I LOVE YOU! ❤️"
+        ];
+        
+        let index = 0;
+        const confessionDiv = document.getElementById("confession");
+        const buttonsDiv = document.getElementById("buttons");
+        const smsMessageDiv = document.getElementById("smsMessage");
+        const sound = document.getElementById("loveSound");
+        
+        function typeMessage(text, callback) {
+            let i = 0;
+            confessionDiv.innerHTML = "";
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    confessionDiv.innerHTML += text[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(callback, 1500);
+                }
+            }, 100);
         }
-
-        function showNo() {
-            document.getElementById('message').innerHTML = "I don't believe it. click itt <br><button class='btn' onclick=\"sendSMS('The girl says no as yes hihi')\">Send SMS 💌</button>";
+        
+        function startConfession() {
+            typeMessage(message, () => {
+                let confessionIndex = 0;
+                function showNext() {
+                    if (confessionIndex < confession.length) {
+                        typeMessage(confession[confessionIndex], () => {
+                            confessionIndex++;
+                            setTimeout(showNext, 1500);
+                        });
+                    } else {
+                        buttonsDiv.style.display = "block";
+                    }
+                }
+                showNext();
+            });
         }
-
+        
+        function acceptConfession() {
+            confessionDiv.innerHTML = "Yay! I love you too! ❤️";
+            sound.play();
+            buttonsDiv.style.display = "none";
+        }
+        
+        function rejectConfession() {
+            confessionDiv.innerHTML = "I don't believe it. Click it!";
+            buttonsDiv.style.display = "none";
+            smsMessageDiv.innerHTML = "<br><button class='btn' onclick=\"sendSMS('The girl says no as yes hihi')\">Send SMS 💌</button>";
+        }
+        
         function sendSMS(text) {
             window.location.href = `sms:+84377790889?body=${encodeURIComponent(text)}`;
         }
+        
+        window.onload = startConfession;
     </script>
 </body>
 </html>
