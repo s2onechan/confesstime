@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>confession</title>
+    <title>Confession</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
@@ -69,8 +69,8 @@
             "From the moment I met you, my heart knew...",
             "You're the one who makes my world brighter.",
             "I can't hold it in anymore...",
-            "I LOVE YOU! ❤️"
-			"Do you be my girlfriend?? 
+            "I LOVE YOU! ❤️",
+            "Do you be my girlfriend?"
         ];
         
         let index = 0;
@@ -114,7 +114,9 @@
             confessionDiv.innerHTML = "Yay! I love you too! ❤️";
             sound.play();
             buttonsDiv.style.display = "none";
-			smsMessageDiv.innerHTML = "<br><button class='btn' onclick=\"sendSMS('I love u saranghaeyo~ <3')\">Send SMS 💌</button>";
+            sound.onended = function() {
+                smsMessageDiv.innerHTML = "<br><button class='btn' onclick=\"sendSMS('I love you <3')\">Send SMS 💌</button>";
+            };
         }
         
         function rejectConfession() {
